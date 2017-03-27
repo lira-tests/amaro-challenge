@@ -12,35 +12,35 @@ class Label
     /**
      * Real bill (BRL) R$ 100.00
      */
-    const ONE_HUNDRED = 'real100';
+    const ONE_HUNDRED = 'oneHundred';
 
     /**
      * Real bill (BRL) R$ 50.00
      */
-    const FIFTY = 'real50';
+    const FIFTY = 'fifty';
 
     /**
      * Real bill (BRL) R$ 20.00
      */
-    const TWENTY = 'real20';
+    const TWENTY = 'twenty';
 
     /**
      * Real bill (BRL) R$ 10.00
      */
-    const TEN = 'real10';
+    const TEN = 'ten';
 
     /**
      * Real bill (BRL) R$ 5.00
      */
-    const FIVE = 'real5';
+    const FIVE = 'five';
 
     /**
      * Real bill (BRL) R$ 2.00
      */
-    const TWO = 'real2';
+    const TWO = 'two';
 
     /**
      * Real bill (BRL) R$ 1.00
      */
-    const ONE = 'real1';
+    const ONE = 'one';
 }

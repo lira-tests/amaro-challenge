@@ -1,5 +1,11 @@
 <?php
 
+namespace Challenge\Model;
+
+/**
+ * Class Variants
+ * @package Challenge\Model
+ */
 class Variants extends \Phalcon\Mvc\Model
 {
 
@@ -67,6 +73,15 @@ class Variants extends \Phalcon\Mvc\Model
     public function initialize()
     {
         $this->setSchema("challenge");
+
+        $this->belongsTo(
+            'product_id',
+            'Challenge\\Model\\Products',
+            'id',
+            [
+                'alias' => 'Products'
+            ]
+        );
     }
 
     /**

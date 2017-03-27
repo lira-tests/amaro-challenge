@@ -1,5 +1,11 @@
 <?php
 
+namespace Challenge\Model;
+
+/**
+ * Class ProductSimilar
+ * @package Challenge\Model
+ */
 class ProductSimilar extends \Phalcon\Mvc\Model
 {
 

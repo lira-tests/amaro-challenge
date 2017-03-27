@@ -14,7 +14,7 @@ interface NoteInterface
     function getLabel();
 
     /**
-     * @return float
+     * @return integer
      */
     function getValue();
 
@@ -22,4 +22,9 @@ interface NoteInterface
      * @return integer
      */
     function getQuantity();
+
+    /**
+     * @return integer
+     */
+    function getAmount();
 }

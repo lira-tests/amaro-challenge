@@ -1,8 +1,14 @@
 <?php
 
+namespace Challenge\Model;
+
 use Phalcon\Validation;
 use Phalcon\Mvc\Model\Validator\Email as EmailValidator;
 
+/**
+ * Class Users
+ * @package Challenge\Model
+ */
 class Users extends \Phalcon\Mvc\Model
 {
 

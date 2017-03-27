@@ -1,5 +1,11 @@
 <?php
 
+namespace Challenge\Model;
+
+/**
+ * Class Status
+ * @package Challenge\Model
+ */
 class Status extends \Phalcon\Mvc\Model
 {
 

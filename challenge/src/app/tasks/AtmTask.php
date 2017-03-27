@@ -17,50 +17,82 @@ class AtmTask extends Task
     {
         echo 'Iniciando o Caixa Eletrônico...' . PHP_EOL;
         echo PHP_EOL;
-        echo ' ---------------------------------------------- ' . PHP_EOL;
-        echo '|    Informe a disponibilidade de casa nota    |' . PHP_EOL;
-        echo ' ---------------------------------------------- ' . PHP_EOL;
 
-        $notas = [
-            'R$ 100',
-            'R$ 50',
-            'R$ 20',
-            'R$ 10',
-            'R$ 5',
-            'R$ 2',
-            'R$ 1',
-        ];
+        $charge = new Atm\Charge();
+        foreach (Atm::getAvailableNotes() as $notes) {
+            $class = 'Challenge\\Library\\Atm\\Bank\\Note\\' . ucfirst($notes);
+            $initNote = new $class();
+            $initNote->setQuantity(rand(0,100));
+            $charge->add($initNote);
+        }
 
-        $quantidade = [];
-
-//        foreach ($notas as $nota) {
-//            echo 'Quantas notas de ' . $nota . '? ';
-//            $val = trim(fgets(STDIN));
-//            if (!is_numeric($val)) {
-//                $val = 0;
-//            }
-//            $quantidade[md5($nota)] = $val;
-//        }
+        $atm = new Atm($charge);
 
         do {
-            echo 'Qual operação quer realizar? ' . PHP_EOL;
+            echo '====================' . PHP_EOL;
+            echo '=       AÇÕES      =' . PHP_EOL;
+            echo '====================' . PHP_EOL;
+            echo PHP_EOL;
             echo '(1) Saque' . PHP_EOL;
             echo '(2) Notas disponíveis' . PHP_EOL;
             echo '(3) Encerrar' . PHP_EOL;
+            echo sprintf('Total disponível R$ %d,00', $atm->getTotalAmount());
+            echo PHP_EOL;
 
-            $operacao = trim(fgets(STDIN));
+            $operations = trim(fgets(STDIN));
 
-            switch ($operacao) {
+            switch ($operations) {
                 case 1:
+                    echo '====================' . PHP_EOL;
+                    echo '=       SAQUE      =' . PHP_EOL;
+                    echo '====================' . PHP_EOL;
                     echo 'Qual o valor do saque? R$ ';
-                    $saque = (float) str_replace(',','.', trim(fgets(STDIN)));
-                    echo PHP_EOL . $saque . PHP_EOL;
+                    $cashAmount = (int) str_replace(',','.', trim(fgets(STDIN)));
+                    echo '====================' . PHP_EOL;
+                    echo '=      ENTREGA     =' . PHP_EOL;
+                    echo '====================' . PHP_EOL;
+                    print_r(implode(PHP_EOL, $atm->cashOut($cashAmount)));
+                    echo PHP_EOL;
+                    echo '====================' . PHP_EOL;
                     break;
                 case 2:
+                    echo '====================' . PHP_EOL;
+                    echo '=    QUANTIDADE    =' . PHP_EOL;
+                    echo '====================' . PHP_EOL;
+                    print_r(implode(PHP_EOL, $atm->getAvailableNotesQuantity()));
+                    echo PHP_EOL;
+                    echo sprintf('Total disponível R$ %d,00', $atm->getTotalAmount());
+                    echo PHP_EOL;
+                    echo '====================' . PHP_EOL;
+                    break;
+                case 3:
                     break 2;
             }
 
         } while(true);
 
+    }
+
+    /**
+     * @param array $params
+     */
+    public function testAction(array $params)
+    {
+        $amount = $params[0];
+        $charge = new Atm\Charge();
+        foreach (Atm::getAvailableNotes() as $notes) {
+            $class = 'Challenge\\Library\\Atm\\Bank\\Note\\' . ucfirst($notes);
+            $initNote = new $class();
+            $initNote->setQuantity(5);
+            $charge->add($initNote);
+        }
+
+        $atm = new Atm($charge);
+
+        echo '====================' . PHP_EOL;
+        echo '=      ENTREGA     =' . PHP_EOL;
+        echo '====================' . PHP_EOL;
+        print_r(implode(PHP_EOL, $atm->cashOut($amount)));
+        echo PHP_EOL;
     }
 }

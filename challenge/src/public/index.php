@@ -45,7 +45,7 @@ try {
         "/",
         [
             new \Challenge\Controller\IndexController(),
-            'indexAction'
+            'index'
         ]
     );
 
@@ -53,7 +53,7 @@ try {
         "/products",
         [
             new \Challenge\Controller\IndexController(),
-            'indexAction'
+            'products'
         ]
     );
 
@@ -61,7 +61,7 @@ try {
         "/products",
         [
             new \Challenge\Controller\IndexController(),
-            'indexAction'
+            'create-product'
         ]
     );
 
@@ -69,7 +69,7 @@ try {
         "/products/{id_product}",
         [
             new \Challenge\Controller\IndexController(),
-            'indexAction'
+            'update-product'
         ]
     );
 
@@ -77,7 +77,7 @@ try {
         "/products/{id_product}",
         [
             new \Challenge\Controller\IndexController(),
-            'indexAction'
+            'getProduct'
         ]
     );
 
@@ -85,7 +85,7 @@ try {
         "/orders",
         [
             new \Challenge\Controller\IndexController(),
-            'indexAction'
+            'orders'
         ]
     );
 
@@ -93,7 +93,7 @@ try {
         "/orders/{id_order}",
         [
             new \Challenge\Controller\IndexController(),
-            'indexAction'
+            'index'
         ]
     );
 
@@ -101,18 +101,19 @@ try {
         "/orders",
         [
             new \Challenge\Controller\IndexController(),
-            'indexAction'
+            'index'
         ]
     );
 
     $application->after(
         function () use ($application) {
-            // This is executed after the route is executed
-            echo json_encode($application->getReturnedValue());
+            $application->response->setContentType('application/json', 'UTF-8');
+            $application->response->setJsonContent($application->getReturnedValue());
+            $application->response->send();
         }
     );
 
-    echo $application->handle();
+    $application->handle();
 
 } catch (\Exception $e) {
     echo $e->getMessage() . '<br>';

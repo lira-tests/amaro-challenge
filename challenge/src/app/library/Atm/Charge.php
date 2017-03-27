@@ -1,6 +1,7 @@
 <?php
 
 namespace Challenge\Library\Atm;
+
 use Challenge\Library\Atm\Bank\NoteAbstract;
 
 /**
@@ -23,18 +24,18 @@ class Charge
     }
 
     /**
-     * @return float
+     * @return int
      */
-    public function getTotalAtmAmount() : float
+    public function getTotalAtmAmount() : int
     {
         $amount = 0;
 
         /** @var NoteAbstract $bankNote */
-        foreach ($this->bankNotes as $bankNote) {
+        foreach ($this->getAvailableNotes() as $bankNote) {
             $amount += $bankNote->getValue() * $bankNote->getQuantity();
         }
 
-        return floatval($amount);
+        return $amount;
     }
 
     /**
@@ -47,7 +48,7 @@ class Charge
         /** @var NoteAbstract $bankNote */
         foreach ($this->bankNotes as $bankNote) {
             if ($bankNote->getQuantity() > 0) {
-                $available[] = $bankNote->getValue();
+                $available[] = $bankNote;
             }
         }
 

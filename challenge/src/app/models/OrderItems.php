@@ -1,5 +1,11 @@
 <?php
 
+namespace Challenge\Model;
+
+/**
+ * Class OrderItems
+ * @package Challenge\Model
+ */
 class OrderItems extends \Phalcon\Mvc\Model
 {
 

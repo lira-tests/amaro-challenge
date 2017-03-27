@@ -1,5 +1,11 @@
 <?php
 
+namespace Challenge\Model;
+
+/**
+ * Class Images
+ * @package Challenge\Model
+ */
 class Images extends \Phalcon\Mvc\Model
 {
 
