@@ -3,9 +3,7 @@
 namespace Challenge\Tasks;
 
 use Challenge\Library\Atm;
-use function Couchbase\defaultDecoder;
 use Phalcon\Cli\Task;
-use Phalcon\Mvc\View\Engine\Php;
 
 /**
  * Class AtmTask
@@ -73,26 +71,4 @@ class AtmTask extends Task
 
     }
 
-    /**
-     * @param array $params
-     */
-    public function testAction(array $params)
-    {
-        $amount = $params[0];
-        $charge = new Atm\Charge();
-        foreach (Atm::getAvailableNotes() as $notes) {
-            $class = 'Challenge\\Library\\Atm\\Bank\\Note\\' . ucfirst($notes);
-            $initNote = new $class();
-            $initNote->setQuantity(5);
-            $charge->add($initNote);
-        }
-
-        $atm = new Atm($charge);
-
-        echo '====================' . PHP_EOL;
-        echo '=      ENTREGA     =' . PHP_EOL;
-        echo '====================' . PHP_EOL;
-        print_r(implode(PHP_EOL, $atm->cashOut($amount)));
-        echo PHP_EOL;
-    }
 }

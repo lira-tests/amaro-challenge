@@ -53,6 +53,9 @@ class Atm
      */
     public function cashOut(int $amount)
     {
+        /**
+         * Check this amount is possible to get
+         */
         if ($this->validate($amount)) {
             return $this->getCash($amount);
         }
@@ -106,7 +109,13 @@ class Atm
             $amount = $amount - $rest;
             $quantity = $amount / $note->getValue();
 
+            /**
+             * Verify quantity of the notes
+             */
             if ($quantity > $note->getQuantity()) {
+                /**
+                 * Sum rest with no possible quantity
+                 */
                 $rest += ($note->getValue() * ($quantity - $note->getQuantity()));
                 $quantity = $note->getQuantity();
             }
@@ -139,12 +148,10 @@ class Atm
     protected function validate(int $amount) : bool
     {
         if (!$this->canRealizeCashOut($amount)) {
-            var_dump('realize');
             return false;
         }
 
         if ($amount > $this->atmCharge->getTotalAtmAmount()) {
-            var_dump('amount');
             return false;
         }
 
