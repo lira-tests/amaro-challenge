@@ -14,6 +14,7 @@ $loader = new Loader();
 
 $loader->registerNamespaces(
     [
+        'Challenge\Model' => __DIR__ . "/models",
         'Challenge\Tasks' => __DIR__ . "/tasks",
         'Challenge\Library' => __DIR__ . "/library",
     ]
@@ -24,6 +25,11 @@ $loader->register();
 
 // Load the configuration file (if any)
 $configFile = __DIR__ . "/config/config.php";
+
+/**
+ * Read services
+ */
+include __DIR__ . '/config/services.php';
 
 if (is_readable($configFile)) {
     $config = include $configFile;

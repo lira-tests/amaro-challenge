@@ -11,7 +11,7 @@ class Stringer
     /**
      * Default regex explode pattern
      */
-    const REGEX_EXPLODE_COMMA = '/%s+/';
+    const REGEX_EXPLODE = '/%s+/';
 
     /**
      * Default explode by comma
@@ -38,7 +38,7 @@ class Stringer
     protected static function getRegexPattern(string $explodeBy)
     {
         return sprintf(
-            Stringer::REGEX_EXPLODE_COMMA,
+            Stringer::REGEX_EXPLODE,
             $explodeBy
         );
     }

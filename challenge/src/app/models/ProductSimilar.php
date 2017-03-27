@@ -2,6 +2,8 @@
 
 namespace Challenge\Model;
 
+use Challenge\Library\Stringer;
+
 /**
  * Class ProductSimilar
  * @package Challenge\Model
@@ -38,6 +40,15 @@ class ProductSimilar extends \Phalcon\Mvc\Model
     public function initialize()
     {
         $this->setSchema("challenge");
+
+        $this->belongsTo(
+            'product_id',
+            'Challenge\\Model\\Products',
+            'id',
+            [
+                'alias' => 'Products'
+            ]
+        );
     }
 
     /**
@@ -70,6 +81,30 @@ class ProductSimilar extends \Phalcon\Mvc\Model
     public static function findFirst($parameters = null)
     {
         return parent::findFirst($parameters);
+    }
+
+    /**
+     * Convert to array similar ids
+     */
+    public function afterFetch()
+    {
+        $this->similar_ids = Stringer::string2Array($this->similar_ids);
+    }
+
+    /**
+     * Convert to string before save
+     */
+    public function beforeSave()
+    {
+        $this->similar_ids = join(',', (array) $this->similar_ids);
+    }
+
+    /**
+     * Return to array after save
+     */
+    public function afterSave()
+    {
+        $this->similar_ids = Stringer::string2Array($this->similar_ids);
     }
 
 }

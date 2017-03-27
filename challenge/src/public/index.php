@@ -61,7 +61,7 @@ try {
         "/products",
         [
             new \Challenge\Controller\IndexController(),
-            'create-product'
+            'createProduct'
         ]
     );
 
@@ -69,7 +69,7 @@ try {
         "/products/{id_product}",
         [
             new \Challenge\Controller\IndexController(),
-            'update-product'
+            'updateProduct'
         ]
     );
 
