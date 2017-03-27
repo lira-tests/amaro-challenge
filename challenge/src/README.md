@@ -25,4 +25,19 @@ Existe testes unitários para essa função.
 
 Inicialmente é preciso ter a extensão do Phalcon
 
-```php -S localhost:8000 -t public/ .htrouter.php```
+### Iniciar o servidor bult-in do PHP
+```
+php -S localhost:8000 -t public/ .htrouter.php
+```
+### Instalar dependências via Composer
+
+```
+composer install
+```
+
+### Executar testes unitários
+
+```
+cd test/
+../vendor/phpunit/phpunit/phpunit
+```
