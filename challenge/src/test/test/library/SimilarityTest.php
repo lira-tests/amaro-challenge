@@ -4,11 +4,25 @@ namespace Test\Library;
 
 use Challenge\Library\Similarity;
 
+/**
+ * Class SimilarityTest
+ * @package Test\Library
+ */
 class SimilarityTest extends \UnitTestCase
 {
-    public function testMost()
+    /**
+     * When categories and tags as similar
+     */
+    public function testBigValue()
     {
-        var_dump(Similarity::calculate(0,0));
-        var_dump(Similarity::calculate(3,3));
+        $this->assertEquals(1, Similarity::calculate(100,100));
+    }
+
+    /**
+     * When categories and tags not similar
+     */
+    public function testZero()
+    {
+        $this->assertEquals(0.2, Similarity::calculate(0,0));
     }
 }
