@@ -13,7 +13,7 @@ use Challenge\Library\Atm\Bank\NoteAbstract;
 class Twenty extends NoteAbstract
 {
     /**
-     * @return mixed
+     * @return string
      */
     function getLabel()
     {

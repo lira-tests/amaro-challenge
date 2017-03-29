@@ -38,6 +38,15 @@ class Images extends \Phalcon\Mvc\Model
     public function initialize()
     {
         $this->setSchema("challenge");
+
+        $this->belongsTo(
+            'variant_id',
+            'Challenge\\Model\\Variants',
+            'id',
+            [
+                'alias' => 'Variants'
+            ]
+        );
     }
 
     /**

@@ -82,6 +82,24 @@ class Variants extends \Phalcon\Mvc\Model
                 'alias' => 'Products'
             ]
         );
+
+        $this->hasOne(
+            'id',
+            'Challenge\\Model\\Images',
+            'variant_id',
+            [
+                'alias' => 'Images'
+            ]
+        );
+
+        $this->hasMany(
+            'id',
+            'Challenge\\Model\\OrderItems',
+            'variant_id',
+            [
+                'alias' => 'OrderItems'
+            ]
+        );
     }
 
     /**

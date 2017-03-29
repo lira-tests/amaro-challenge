@@ -31,6 +31,15 @@ class Status extends \Phalcon\Mvc\Model
     public function initialize()
     {
         $this->setSchema("challenge");
+
+        $this->belongsTo(
+            'id',
+            'Challenge\\Model\\Orders',
+            'status_id',
+            [
+                'alias' => 'Status'
+            ]
+        );
     }
 
     /**

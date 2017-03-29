@@ -9,6 +9,11 @@ use Phalcon\Exception;
 class IndexController extends ControllerBase
 {
 
+    /**
+     * Home of API
+     *
+     * @return array
+     */
     public function index()
     {
         return [
@@ -16,6 +21,10 @@ class IndexController extends ControllerBase
         ];
     }
 
+    /**
+     * Get products
+     * @return array
+     */
     public function products()
     {
         $products = Products::getAll();
@@ -25,6 +34,12 @@ class IndexController extends ControllerBase
         ];
     }
 
+    /**
+     * Return one product
+     *
+     * @param $productId
+     * @return array
+     */
     public function getProduct($productId)
     {
         $product = Products::getById($productId);
@@ -34,6 +49,11 @@ class IndexController extends ControllerBase
         ];
     }
 
+    /**
+     * Create a new product
+     *
+     * @return array
+     */
     public function createProduct()
     {
         $data = json_decode($this->request->getRawBody(), true);
@@ -66,6 +86,12 @@ class IndexController extends ControllerBase
         ];
     }
 
+    /**
+     * Update a product
+     *
+     * @param $productId
+     * @return array
+     */
     public function updateProduct($productId)
     {
         $data = json_decode($this->request->getRawBody(), true);
@@ -100,10 +126,21 @@ class IndexController extends ControllerBase
 
     public function orders()
     {
-        $orders = Orders::find();
+        $orders = Orders::getOrders();
 
         return [
             'orders' => $orders
+        ];
+    }
+
+    public function orderItems($orderId)
+    {
+        $order = Orders::getOrderProducts($orderId);
+
+        return [
+            'order' => [
+                'products' => $order
+            ]
         ];
     }
 

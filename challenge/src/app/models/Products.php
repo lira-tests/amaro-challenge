@@ -165,7 +165,10 @@ class Products extends \Phalcon\Mvc\Model
         $product['variants'] = $variants;
         $product['similars'] = $similars ?? self::find(
             [
-                'id IN (' . join(',', $similars->toArray()) . ')',
+                'id IN ({similar:array})',
+                'bind' => [
+                    'similar' => $similars->toArray()
+                ],
                 'columns' => 'id, name, description'
             ]
         );

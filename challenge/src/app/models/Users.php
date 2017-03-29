@@ -70,6 +70,15 @@ class Users extends \Phalcon\Mvc\Model
     public function initialize()
     {
         $this->setSchema("challenge");
+
+        $this->belongsTo(
+            'id',
+            'Challenge\\Model\\Orders',
+            'user_id',
+            [
+                'alias' => 'Users'
+            ]
+        );
     }
 
     /**

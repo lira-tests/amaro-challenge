@@ -46,6 +46,25 @@ class OrderItems extends \Phalcon\Mvc\Model
     public function initialize()
     {
         $this->setSchema("challenge");
+
+        $this->hasMany(
+            'variant_id',
+            'Challenge\\Model\\Variants',
+            'id',
+            [
+                'alias' => 'Variants'
+            ]
+        );
+
+        $this->belongsTo(
+            'order_id',
+            'Challenge\\Model\\Orders',
+            'id',
+            [
+                'alias' => 'Orders'
+            ]
+        );
+
     }
 
     /**
