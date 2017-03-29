@@ -1,6 +1,7 @@
 <?php
 
 namespace Challenge\Model;
+use Phalcon\Exception;
 
 /**
  * Class Orders
@@ -115,11 +116,12 @@ class Orders extends \Phalcon\Mvc\Model
     }
 
     /**
+     * @param string|null $status
      * @return \Phalcon\Mvc\Model\ResultsetInterface
      */
-    public static function getOrders()
+    public static function getOrders(string $status = null) : \Phalcon\Mvc\Model\ResultsetInterface
     {
-        return self::query()
+        $query = self::query()
             ->columns(
                 [
                     'Challenge\\Model\\Orders.id',
@@ -128,9 +130,14 @@ class Orders extends \Phalcon\Mvc\Model
                 ]
             )
             ->innerJoin('Challenge\\Model\\Users', 'user_id = u.id', 'u')
-            ->innerJoin('Challenge\\Model\\Status', 'status_id = s.id', 's')
-            ->execute()
-        ;
+            ->innerJoin('Challenge\\Model\\Status', 'status_id = s.id', 's');
+
+        if (!is_null($status)) {
+            $query->andWhere('s.status = :status:')
+                ->bind(['status' => $status]);
+        }
+
+        return $query->execute();
     }
 
     /**
@@ -172,6 +179,52 @@ class Orders extends \Phalcon\Mvc\Model
         }
 
         return $items;
+    }
+
+    /**
+     * @param array $data
+     * @return int
+     * @throws Exception
+     */
+    public function createOrder(array $data) : int
+    {
+        $order = new Orders();
+
+        if (empty($data['userId'])) {
+            throw new Exception('Não é possível criar um pedido sem um ID de usuário', 500);
+        }
+
+        $user = Users::findFirst($data['userId']);
+
+        if ($user) {
+            throw new Exception('Não é possível criar um pedido para um usuário não encontrado', 500);
+        }
+
+        // initial status
+        $status = Status::findFirst(1);
+
+        $order->user_id = $user->id;
+        $order->status_id = $status->id;
+        $order->created = date('Y-m-d H:i:s');
+
+        $orderItems = [];
+
+        foreach ($data['variants'] as $variant) {
+            $getVariant = Variants::findFirst($variant['id']);
+
+            $orderItem = new OrderItems();
+            $orderItem->variant_id = $getVariant->id;
+            $orderItem->quantity = $variant['quantity'];
+            $orderItem->orderId = $order;
+
+            $orderItems[] = $orderItem;
+        }
+
+        $order->orderItems = $orderItems;
+
+        $result = $order->save();
+
+        return $order->id;
     }
 
 }

@@ -106,7 +106,7 @@ class IndexController extends ControllerBase
         $products = new Products();
 
         try {
-            if ($produto = $products->updateProduct($productId, $data)) {
+            if ($product = $products->updateProduct($productId, $data)) {
                 $success = true;
                 $message = sprintf('Produto #%d atualizado com sucesso!', $productId);
             } else {
@@ -126,7 +126,9 @@ class IndexController extends ControllerBase
 
     public function orders()
     {
-        $orders = Orders::getOrders();
+        $status = $this->request->get('status', null);
+
+        $orders = Orders::getOrders($status);
 
         return [
             'orders' => $orders
@@ -141,6 +143,39 @@ class IndexController extends ControllerBase
             'order' => [
                 'products' => $order
             ]
+        ];
+    }
+
+    public function createOrder()
+    {
+        $data = json_decode($this->request->getRawBody(), true);
+
+        if (json_last_error() != JSON_ERROR_NONE) {
+            $this->response->setStatusCode(400);
+            return [
+                'Formato de JSON inválido!'
+            ];
+        }
+
+        $orders = new Orders();
+
+        try {
+            if ($order = $orders->createOrder($data)) {
+                $success = true;
+                $message = sprintf('Order #%d criada com sucesso', $order);
+            } else {
+                var_dump($order);
+                $success = false;
+                $message = join(', ', $orders->getMessages());
+            }
+        } catch (Exception $exception) {
+            $success = false;
+            $message = $exception->getMessage();
+        }
+
+        return [
+            'sucesso' => $success,
+            'mensagem' => $message
         ];
     }
 

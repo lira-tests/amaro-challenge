@@ -41,6 +41,12 @@ try {
      */
     $application = new Micro($di);
 
+    /**
+     * Set to use query strings
+     */
+    $application->getRouter()->setUriSource(\Phalcon\Mvc\Router::URI_SOURCE_SERVER_REQUEST_URI);
+
+
     $application->get(
         "/",
         [
@@ -93,7 +99,15 @@ try {
         "/orders/{id_order}",
         [
             new \Challenge\Controller\IndexController(),
-            'index'
+            'getOrder'
+        ]
+    );
+
+    $application->get(
+        "/orders/{id_order}/products",
+        [
+            new \Challenge\Controller\IndexController(),
+            'getOrder'
         ]
     );
 
@@ -101,9 +115,17 @@ try {
         "/orders",
         [
             new \Challenge\Controller\IndexController(),
-            'index'
+            'createOrder'
         ]
     );
+
+    $application->notFound(function () use ($application) {
+        $application->response->setStatusCode(404);
+
+        echo  json_encode([
+            'Não encontrado'
+        ]);
+    });
 
     $application->after(
         function () use ($application) {
