@@ -124,11 +124,15 @@ class IndexController extends ControllerBase
         ];
     }
 
-    public function orders()
+    /**
+     * @param null $order_id
+     * @return array
+     */
+    public function orders($order_id = null)
     {
         $status = $this->request->get('status', null);
 
-        $orders = Orders::getOrders($status);
+        $orders = Orders::getOrders($order_id, $status);
 
         return [
             'orders' => $orders

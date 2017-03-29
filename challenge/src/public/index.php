@@ -99,7 +99,7 @@ try {
         "/orders/{id_order}",
         [
             new \Challenge\Controller\IndexController(),
-            'getOrder'
+            'orders'
         ]
     );
 
@@ -107,7 +107,7 @@ try {
         "/orders/{id_order}/products",
         [
             new \Challenge\Controller\IndexController(),
-            'getOrder'
+            'orderItems'
         ]
     );
 

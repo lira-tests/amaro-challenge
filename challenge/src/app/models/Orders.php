@@ -116,10 +116,11 @@ class Orders extends \Phalcon\Mvc\Model
     }
 
     /**
+     * @param int $orderId
      * @param string|null $status
      * @return \Phalcon\Mvc\Model\ResultsetInterface
      */
-    public static function getOrders(string $status = null) : \Phalcon\Mvc\Model\ResultsetInterface
+    public static function getOrders(int $orderId = null, string $status = null) : \Phalcon\Mvc\Model\ResultsetInterface
     {
         $query = self::query()
             ->columns(
@@ -135,6 +136,11 @@ class Orders extends \Phalcon\Mvc\Model
         if (!is_null($status)) {
             $query->andWhere('s.status = :status:')
                 ->bind(['status' => $status]);
+        }
+
+        if (!is_null($orderId)) {
+            $query->andWhere('Challenge\\Model\\Orders.id = :id:')
+                ->bind(['id' => $orderId]);
         }
 
         return $query->execute();

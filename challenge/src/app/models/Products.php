@@ -163,11 +163,11 @@ class Products extends \Phalcon\Mvc\Model
         $product = $product->toArray();
 
         $product['variants'] = $variants;
-        $product['similars'] = $similars ?? self::find(
+        $product['similars'] = self::find(
             [
                 'id IN ({similar:array})',
                 'bind' => [
-                    'similar' => $similars->toArray()
+                    'similar' => Stringer::string2Array($similars->similar_ids)
                 ],
                 'columns' => 'id, name, description'
             ]
@@ -203,7 +203,7 @@ class Products extends \Phalcon\Mvc\Model
             }
 
             arsort($similarList);
-            $similarList = array_slice($similarList, 0, 5, true);
+            $similarList = array_slice($similarList, 0, 3, true);
 
             // check is update ou create
             if ($product->getSimilar()) {
