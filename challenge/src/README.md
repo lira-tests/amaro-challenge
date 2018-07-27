@@ -26,18 +26,20 @@ Existe testes unitários para essa função.
 Inicialmente é preciso ter a extensão do Phalcon
 
 ### Iniciar o servidor bult-in do PHP
-```
+
+```bash
 php -S localhost:8000 -t public/ .htrouter.php
 ```
+
 ### Instalar dependências via Composer
 
-```
+```bash
 composer install
 ```
 
 ### Executar testes unitários
 
-```
+```bash
 cd test/
 ../vendor/phpunit/phpunit/phpunit
 ```
@@ -47,7 +49,7 @@ cd test/
  - GET /products : lista todos os produtos
  
  retorno:
- ```
+ ```json
  { 
     "products": [
         {...}
@@ -58,7 +60,7 @@ cd test/
  - POST /products : cria um novo produto
  
  raw data:
- ```
+ ```json
  {
  	"name": "Novo produto",
      "slug": "novo-produto",
@@ -85,7 +87,7 @@ cd test/
  - PUT /products/{ID do produto} : atualiza as informações do produto com esta ID
  
  raw data:
- ```
+ ```json
  {
  	"name": "Novo Nome",
      "description": "Nova descrição",
@@ -120,7 +122,7 @@ cd test/
  - GET /products/{ID do produto} : lista as informações do produto com esta ID,  - inclusive os três produtos mais similares
  
  retorno:
- ```
+ ```bash
  {
      "product": {
          "id": "1",
@@ -160,7 +162,7 @@ cd test/
  - GET /orders : lista todos os pedidos
  
  retorno:
- ```
+ ```json
  {
      "orders": [
          {
@@ -175,7 +177,7 @@ cd test/
  - GET /orders/{ID do pedido} : lista as informações do pedido com esta ID
  
  retorno:
- ```
+ ```json
  {
      "orders": [
          {
@@ -186,10 +188,11 @@ cd test/
      ]
  }
  ```
+ 
  - GET /orders?status={status_code} : lista todos os pedidos com um determinado  - código de status
  
   retorno:
-  ```
+  ```json
   {
       "orders": [
           {
@@ -204,7 +207,8 @@ cd test/
  - GET /orders/{ID do pedido}/products : lista os itens do pedido com esta ID
  
  retorno:
- ```
+
+ ```json
  {
      "order": {
          "products": {
@@ -234,14 +238,14 @@ cd test/
  - POST /orders : cria um novo pedido ; deve ser informado o ID do usuário
  
  raw data:
- ```
+ ```json
  {
- 	"userId": 1,
-     "variants": [
-     	{
-         	"id": 1,
-             "quantity": 2
-         }
-     ]
+    "userId": 1,
+    "variants": [
+        {
+            "id": 1,
+            "quantity": 2
+        }
+    ]
  }
  ```
